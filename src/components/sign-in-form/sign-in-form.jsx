@@ -1,13 +1,9 @@
 import { useState } from 'react';
 
-import './sign-in-form.scss';
-import Button from '../button/button';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button';
 import FormInput from '../form-input/form-input';
-import {
-	signInWithGooglePopup,
-	createUserDocumentFromAuth,
-	signInAuthUserWithEmailAndPassword,
-} from '../../utils/firebase/firebase';
+import { signInWithGooglePopup, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase';
+import { ButtonsContainer, SignInContainer } from './sign-in-form.styles';
 
 const defaultFormFields = {
 	email: '',
@@ -48,20 +44,20 @@ const SignInForm = () => {
 	};
 
 	return (
-		<div className="sign-up-container">
+		<SignInContainer>
 			<h2>Already have an account?</h2>
 			<span>Sign in with your email and password</span>
 			<form onSubmit={handleSubmit}>
 				<FormInput label="Email" type="email" name="email" required onChange={handleChange} value={email} />
 				<FormInput label="Password" type="password" name="password" required onChange={handleChange} value={password} />
-				<div className="buttons-container">
+				<ButtonsContainer>
 					<Button type="submit">Sign In</Button>
-					<Button type="button" buttonType="google" onClick={signInWithGoogle}>
+					<Button type="button" buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>
 						Google sign in
 					</Button>
-				</div>
+				</ButtonsContainer>
 			</form>
-		</div>
+		</SignInContainer>
 	);
 };
 
