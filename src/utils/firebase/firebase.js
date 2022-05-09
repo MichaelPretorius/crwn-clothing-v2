@@ -76,7 +76,6 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 	});
 
 	await batch.commit();
-	console.log('done');
 };
 
 export const getCollectionAndDocuments = async () => {
@@ -84,11 +83,13 @@ export const getCollectionAndDocuments = async () => {
 	const q = query(collectionRef);
 	const querySnapshot = await getDocs(q);
 
-	const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-		const { title, items } = docSnapshot.data();
-		acc[title.toLowerCase()] = items;
-		return acc;
-	}, {});
+	// MOVING BUSINESS LOGIC TO REDUX SELECTORS
+	// const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+	// 	const { title, items } = docSnapshot.data();
+	// 	acc[title.toLowerCase()] = items;
+	// 	return acc;
+	// }, {});
+	// return categoryMap;
 
-	return categoryMap;
+	return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
 };
